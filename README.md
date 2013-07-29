@@ -11,9 +11,9 @@ Instructions
 --------------
 1) whitelist your device: https://developers.google.com/cast/whitelisting
 
-2) Edit line 21 with your own APP ID of receiver/index.html
+2) Edit line 21 of receiver/index.html with your own APP ID
 
-3) Edit line 31 with your own APP ID of sender/index.html
+3) Edit line 31 of sender/index.html with your own APP ID
 
 4) Put the receiver code at the URL you used to whitelist your chromecast
 
