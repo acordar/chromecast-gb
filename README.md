@@ -3,6 +3,8 @@ chromecast-gb
 
 Working Game Boy emulator for chromecast
 
+Video here (ignore the cat): http://www.youtube.com/watch?v=yKJ8iX45cGY
+
 Credit of GB emulator goes to Pedro Ladaria at http://codebase.es/jsgb/
 
 Credit of GB Rom http://momeka.com/
