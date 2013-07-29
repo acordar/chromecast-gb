@@ -1,0 +1,102 @@
+<html>
+<link rel="stylesheet" type="text/css" href="css/main.css"> 
+<link rel="stylesheet" type="text/css" href="css/jsgb/style.css">
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/gbjs/toolbox.js"></script>
+<script src="js/gbjs/scrollbar.js"></script>
+<script src="js/gbjs/jsgb.cpu.js"></script>
+<script src="js/gbjs/jsgb.memory.js"></script>
+<script src="js/gbjs/jsgb.rom.js"></script>
+<script src="js/gbjs/jsgb.interrupts.js"></script>
+<script src="js/gbjs/jsgb.input.js"></script>
+<script src="js/gbjs/jsgb.lcd.js"></script>
+<script src="js/gbjs/jsgb.timers.js"></script>
+<script src="js/gbjs/jsgb.debugger.js"></script>
+<script src="js/gbjs/jsgb.gameboy.js"></script>
+<script src="https://www.gstatic.com/cast/js/receiver/1.0/cast_receiver.js">
+</script>
+<script type="text/javascript">
+
+	var receiver = new cast.receiver.Receiver(
+		'YOUR APP ID HERE', ['Test'],
+		"",
+		5);
+
+	var channelHandler = new cast.receiver.ChannelHandler('Test');
+	channelHandler.addChannelFactory(
+		receiver.createChannelFactory('Test'));
+
+	receiver.start();
+	
+	//listen for messages from chromecast-sender
+	channelHandler.addEventListener(cast.receiver.Channel.EventType.MESSAGE, onMessage.bind(this));   	
+
+	//Load the rom on page load
+	window.addEventListener('load', function() {
+	  gb_Insert_Cartridge("Espionage.gb",true);
+	  gb_Run();
+	});
+
+	//Receives keyboard event from chromecast-sender
+	function onMessage(event) {	
+		var e;
+		if(event.message.type == "keyup") {
+			e = jQuery.Event("keyup");		
+	 		e.which = event.message.keycode;
+	 		gb_OnKeyUp_Event(e);
+	 		if(event.message.keycode == 76) {
+	 			gb_Resize_LCD();
+	 		}
+	 	} else {
+			e = jQuery.Event("keydown");
+	 		e.which = event.message.keycode;
+	 		gb_OnKeyDown_Event(e);
+	 	}
+
+	 }
+
+	 //Pedro Ladaria function
+	 function gb_Show_Fps() {
+	 	gbFrames+=gbFPS;
+	 	gbSeconds++;
+	 	$('STATUS').innerHTML = 
+	 	'Running: '+gbFPS+' '+
+	 	'fps - Average: '+(gbFrames/gbSeconds).toFixed(2)+' - '+
+	 	'Bank switches/s: '+gbBankSwitchCount;
+	 	gbFPS=0;
+	 	gbBankSwitchCount=0;
+	 }
+
+	 //Pedro Ladaria function
+	 function gb_Resize_LCD() {
+	 	if ($('BX').value=='Size x2') {
+	 		$('BX').value='Size x3';
+	 		$('LCD').style.width='320px';
+	 		$('LCD').style.height='288px';
+	 	}
+	 	else if ($('BX').value=='Size x3') {
+	 		$('BX').value='Size x1';
+	 		$('LCD').style.width='480px';
+	 		$('LCD').style.height='432px';
+	 	}
+	 	else {
+	 		$('BX').value='Size x2';
+	 		$('LCD').style.width='160px';
+	 		$('LCD').style.height='144px';
+	 	}
+	 }
+
+	</script>
+	<body>
+		<canvas id="LCD" width="160" height="144"></canvas>
+		<div id="STATUS">Pause</div>
+		<div id="DEBUGGER"></div>
+		<div style="display:none">
+			<input id="BR" type="button" value="Run"   onfocus="this.blur();" onclick="gb_Run();"/>
+			<input id="BP" type="button" value="Pause" onfocus="this.blur();" disabled onclick="gb_Pause();"/>
+			<input id="BS" type="button" value="Step"  onfocus="this.blur();" onclick="gb_Step();"/>	
+			<input id="BX" type="button" value="Size x2" onfocus="this.blur();" onclick="gb_Resize_LCD();"/>
+		</div>
+	</body>
+
+	</html>
