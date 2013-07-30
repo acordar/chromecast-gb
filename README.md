@@ -31,7 +31,7 @@ Instructions
 This application now support the 360 gamepad as a source of user input. It may work with other gamepads if the button mappings are the same. The button mappings are as follows:
 
 360 Pad Button A -> Gameboy Button B (yuck, I know)<br>
-360 Pad Button B -> Gameboy Button <br>
+360 Pad Button B -> Gameboy Button A <br>
 360 dpad -> Gameboy dpad<br>
 360 Pad Button Start -> Gameboy Button Start<br>
 360 Pad Button Back -> Gameboy Button Select
