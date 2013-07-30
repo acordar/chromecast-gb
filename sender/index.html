@@ -36,7 +36,7 @@ onLaunch = function(activity) {
   if (activity.status == "running") {
     console.log("running");
     cv_activity = activity;
-
+    gamepad.init();
   } else if (activity.status == "error") {
     cv_activity = null;
     console.log("error");
@@ -56,6 +56,7 @@ $(document).on('keydown', function(event) {
 });
 
 </script>
+<script src="js/gamepad.js"></script>
 <body>
   <strong>X</strong>: Button A<br/>
   <strong>Z</strong>: Button B<br/>
